@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "run")
 public class AppRunner extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	public AppRunner() {
 		System.out.println("Servlet Apprunner()");
@@ -27,7 +28,11 @@ public class AppRunner extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Servlet doGet()");
+		System.out.println("AppRunner#doGet()");
+		getServletContext().getRequestDispatcher("/help").include(req, resp);
+		// forward instead of include will flash response!
+		System.out.println(getServletContext().getAttribute("Attribute"));
 		resp.getWriter().append("Hello, ").append(req.getParameter("name"));
+		//resp.sendRedirect("help"); redirects to /help
 	}
 }
